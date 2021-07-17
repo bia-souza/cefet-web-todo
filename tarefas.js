@@ -1,16 +1,19 @@
 listaTarefaQuery = document.querySelector('ul#lista-tarefas');
 botaoAdicionaQuery = document.querySelector('#incluir-nova-tarefa');
+itemTarefaQuery = document.querySelectorAll('.item-tarefa');
+nomeQuery = document.querySelector('#nova-tarefa-nome');
+categoriaQuery = document.querySelector('#nova-tarefa-categoria');
 
 let tarefas = [
 	{
 		nome: 'Comprar leite',
 		categoria: 'compras',
-		marcado: false
+		realizada: false
 	},
 	{
 		nome: 'Escutar chimbinha',
 		categoria: 'lazer',
-		marcado: true
+		realizada: true
 	}
 ];
 
@@ -18,7 +21,7 @@ function insereTarefaNaPagina(tarefa) {
 	let tarefaEl = document.createElement("li");
 	tarefaEl.classList.add('item-tarefa');
 	tarefaEl.classList.add(`categoria.${tarefa.categoria}`);
-;	if(tarefa.marcado === true){
+;	if(tarefa.realizada === true){
 		tarefaEl.classList.add('marcado');
 	}
 	tarefaEl.innerHTML = tarefa.nome;
@@ -31,8 +34,7 @@ for(tarefa of tarefas){
 }
 
 function criaTarefa() {
-	nomeQuery = document.querySelector('#nova-tarefa-nome');
-	categoriaQuery = document.querySelector('#nova-tarefa-categoria');
+	
 	tarefa = {
 		nome: `${nomeQuery.value}`,
 		categoria: `${categoriaQuery.selectedIndex.value}`,
@@ -45,3 +47,16 @@ function criaTarefa() {
 }
 
 botaoAdicionaQuery.addEventListener('click', criaTarefa);
+
+itemTarefaQuery.forEach(itemTarefa => {
+						itemTarefa.addEventListener('click', item => {
+								item.currentTarget.classList.toggle('marcado');
+								item.currentTarget.realizada = !item.currentTarget.realizada;
+							});
+						});
+
+nomeQuery.addEventListener('keyup', key => {
+								if(key.key === 'Enter'){
+									criaTarefa();
+								}
+							});
