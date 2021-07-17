@@ -3,6 +3,7 @@ botaoAdicionaQuery = document.querySelector('#incluir-nova-tarefa');
 itemTarefaQuery = document.querySelectorAll('.item-tarefa');
 nomeQuery = document.querySelector('#nova-tarefa-nome');
 categoriaQuery = document.querySelector('#nova-tarefa-categoria');
+filtroCategoriaQuery = document.querySelector('#filtro-de-categoria');
 
 let tarefas = [
 	{
@@ -60,3 +61,18 @@ nomeQuery.addEventListener('keyup', key => {
 									criaTarefa();
 								}
 							});
+function filtrarTarefa(){
+	
+    let categoria = filtroCategoriaQuery.value;
+
+    for(itemTarefa of itemTarefaQuery){
+		if(itemTarefa.classList.contains(`categoria-${categoria}`)){
+			itemTarefa.classList.add("retido-no-filtro");
+		}
+		else{
+			itemTarefa.classList.remove("retido-no-filtro");
+		}
+	}
+}
+
+filtroCategoriaQuery.addEventListener('change', filtrarTarefa);
